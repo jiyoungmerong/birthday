@@ -13,11 +13,8 @@ import java.util.stream.Collectors;
 
 @Entity
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "User")
-@AllArgsConstructor
-@Builder
 public class User implements UserDetails {
     @Id // pk
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +35,14 @@ public class User implements UserDetails {
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
     private List<String> roles = new ArrayList<>();
+
+    @Builder
+    public User(String userId, String password, String name, String nickname){
+        this.userId = userId;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+    }
 
     public User(String subject, String s, Collection<? extends GrantedAuthority> authorities) {
     }
