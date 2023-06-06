@@ -19,8 +19,7 @@ public class UserGetController {
     }
 
     @GetMapping("/signup")
-    public String signUpForm(Model model) {
-        model.addAttribute("userDto", new UserDto());
+    public String signUpForm() {
         return "join";
     }
     @GetMapping("/main")

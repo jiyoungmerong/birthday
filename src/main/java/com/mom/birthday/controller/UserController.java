@@ -1,25 +1,20 @@
 package com.mom.birthday.controller;
 
-import com.mom.birthday.domain.User;
-import com.mom.birthday.domain.dto.LoginRequest;
+import com.mom.birthday.domain.request.LoginRequest;
 import com.mom.birthday.domain.dto.TokenDTO;
-import com.mom.birthday.domain.dto.UserDto;
 import com.mom.birthday.jwt.TokenProvider;
 import com.mom.birthday.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,14 +23,6 @@ public class UserController {
 
     private final TokenProvider tokenProvider;
 
-//    @PostMapping("/signup")
-//    public ResponseEntity<String> signUp(@Valid  @ModelAttribute UserDto userDto, BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()) {
-//            return ResponseEntity.badRequest().body("잘못된 입력값이 존재합니다.");
-//        }
-//        userService.join(userDto);
-//        return ResponseEntity.ok("success Join");
-//    }
 
 
 //    @PostMapping("/login")
@@ -74,7 +61,7 @@ public class UserController {
 //            SecurityContextHolder.getContext().setAuthentication(authentication);
 //        }
 
-        TokenDTO tokenDTO = tokenProvider.createToken(authentication);
+        TokenDTO tokenDTO = tokenProvider.generageToken(authentication);
         return ResponseEntity.ok().body(tokenDTO);
     }
 

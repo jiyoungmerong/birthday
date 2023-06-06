@@ -35,22 +35,20 @@ public class TokenProvider {
             this.validityTime = validityTime;
         }
 
-        public TokenDTO createToken(Authentication authentication) {
-            String authorities = authentication.getAuthorities().stream()
+        public TokenDTO generageToken(Authentication authentication){
+            String authrities = authentication.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(","));
 
-            long now = (new Date()).getTime();
-            Date tokenExpiredTime = new Date(now + validityTime);
             String accessToken = Jwts.builder()
                     .setSubject(authentication.getName())
-                    .claim("auth", authorities)
-                    .setExpiration(tokenExpiredTime)
+                    .claim("auth", authrities)
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
 
             String refreshToken = Jwts.builder()
-                    .setExpiration(tokenExpiredTime)
+                    .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 36))
                     .signWith(key, SignatureAlgorithm.HS256)
                     .compact();
 
@@ -61,11 +59,11 @@ public class TokenProvider {
                     .build();
         }
 
-        public Authentication getAuthentication(String accessToken) {
+        public Authentication getAuthentication(String accessToken){
             Claims claims = parseClaims(accessToken);
 
-            if (claims.get("auth") == null) {
-                throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+            if(claims.get("auth") == null){
+                throw new RuntimeException("권한 정보가 없습니다");
             }
 
             Collection<? extends GrantedAuthority> authorities =

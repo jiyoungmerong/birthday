@@ -11,9 +11,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "User")
 public class User implements UserDetails {
     @Id // pk
@@ -32,21 +34,22 @@ public class User implements UserDetails {
     @Column(length = 10, unique = true, nullable = false)
     private String nickname; // 닉네임
 
+
     @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
+//    @Builder.Default
     private List<String> roles = new ArrayList<>();
 
+
+    public User(String subject, String s, Collection<? extends GrantedAuthority> authorities) {
+    }
+
     @Builder
-    public User(String userId, String password, String name, String nickname){
+    public User(String userId, String password, String name, String nickname) {
         this.userId = userId;
         this.password = password;
         this.name = name;
         this.nickname = nickname;
     }
-
-    public User(String subject, String s, Collection<? extends GrantedAuthority> authorities) {
-    }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

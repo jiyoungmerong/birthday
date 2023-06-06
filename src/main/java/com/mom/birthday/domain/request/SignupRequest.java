@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public final class SignupRequest { // 회원가입 요청
 
-    private String id;
+    private String userId;
 
     private String password;
 

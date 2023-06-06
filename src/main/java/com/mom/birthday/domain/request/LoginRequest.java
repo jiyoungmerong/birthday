@@ -1,17 +1,14 @@
 package com.mom.birthday.domain.request;
 
-
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Getter
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class LoginRequest {
+    private String userId; // 아이디
 
-    private String id;
-
-    private String password;
-
+    private String password; // 비밀번호
 }

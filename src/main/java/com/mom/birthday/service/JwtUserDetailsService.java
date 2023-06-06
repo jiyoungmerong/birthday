@@ -24,8 +24,8 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     // 해당하는 User 의 데이터가 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(User user) {
-        return (UserDetails) User.builder()
-                .userId(user.getUserId())
+        return User.builder()
+//                .userId(user.getUserId())
                 .password(passwordEncoder.encode(user.getPassword()))
                 .nickname(user.getNickname())
                 .name(user.getName())
